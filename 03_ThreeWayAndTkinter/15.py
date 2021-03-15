@@ -60,7 +60,9 @@ class Application(tk.Frame):
                 else:
                     self.buttonsArray[i][j] = buff[c]
                     c += 1 
-        random.shuffle(self.buttonsArray)#убрать для проверки на победу                           
+        random.shuffle(self.buttonsArray)   
+        while(self.checkSolvability() == False):
+            random.shuffle(self.buttonsArray)                      
         self.updateBoard()
 
     def buttonListener(self,i,j):
@@ -114,6 +116,26 @@ class Application(tk.Frame):
                     self.buttonsArray[i][j].configure(command=self.buttonListener(i,j))
                     self.buttonsArray[i][j].grid(row=i, column=j, sticky="nsew")
 
+    def checkSolvability(self):
+        summa = 0
+        for i in range(4):
+            for j in range(4):
+                if type(self.buttonsArray[i][j]) == str:
+                    summa += (i+1)
+                else:
+                    for n in range(j+1,4):
+                        if type(self.buttonsArray[i][n]) != str:
+                            if int(self.buttonsArray[i][j]['text']) > int(self.buttonsArray[i][n]['text']):
+                                summa += 1
+                    for m in range(i+1,4):
+                        for n in range(4):
+                            if type(self.buttonsArray[m][n]) != str:
+                                if int(self.buttonsArray[i][j]['text']) > int(self.buttonsArray[m][n]['text']):
+                                    summa += 1               
+        if summa%2 == 0:
+            return True
+        else: 
+            return False    
 
 app = Application()
 app.master.title('15')
