@@ -1,6 +1,6 @@
 import tkinter as tk
 
-class Application(tk.Frame):nqw
+class Application(tk.Frame):
 	def __init__(self, master=None, title="InputLabel", **kwargs):
 		super().__init__(master, **kwargs)
 		self.master.title(title)
